@@ -48,7 +48,7 @@ while True:
 
 	nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True)
 
-	print("found " %d " devices" % len(nearby_devices))
+	draw.text((0, 0), "found %d devices" % len(nearby_devices), font=font, fill=255)
 
 	for addr, name in nearby_devices:
 		if (name == "HC-03") or (name == "HC-05") or (name == "HC-06"):
