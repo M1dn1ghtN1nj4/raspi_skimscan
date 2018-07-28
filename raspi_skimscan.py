@@ -1,5 +1,6 @@
 # file: raspi_skimscan.py
-# auth: Tyler Winegarner (twinegarner@gmail.com)
+# Modified by Noah Greene (m1dn1ghtn1nj4@gmail.com)
+# original author: Tyler Winegarner (twinegarner@gmail.com)
 # desc: scans for local bluetooth devices with names matching the description of those
 #       used in cas pump credit card skimmers. This software is directly derived from 
 #       the research done by Nathan Seidle as documented in this article:
@@ -41,21 +42,20 @@ ellipsis = ".   "
 phase = 0
 
 while True:
-        draw.rectangle((0, 0, width, height), outline=0, fill=0)
-        draw.text((0, 24), "scanning" + ellipsis, font=font, fill=255)
-        disp.image(image)
-        disp.display()
+	draw.rectangle((0, 0, width, height), outline=0, fill=0)
+	draw.text((0, 24), "Scanning" + ellipsis, font=font, fill=255)
+	disp.image(image)
+	disp.display()
 
-	nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True)
-
-	draw.text((0, 0), "found %d devices" % len(nearby_devices), font=font, fill=255)
+	nearby_devices = bluetooth.discover_devices(duration=10, lookup_names=True)
 
 	for addr, name in nearby_devices:
 		if (name == "HC-03") or (name == "HC-05") or (name == "HC-06"):
 			draw.rectangle((0, 0, width, height), outline=0, fill=0)
-			draw.text((0, 12), "Potential skimmer", font=font, fill=255)
-			draw.text((0, 24), name + " found.", font=font, fill=255)
-			draw.text((0, 36), "Use caution.", font=font, fill=255)
+			draw.text((0, 0), "found %d devices" % len(nearby_devices), font=font, fill=255)
+			draw.text((0, 24), "Potential skimmer", font=font, fill=255)
+			draw.text((0, 36), name + " found!", font=font, fill=255)
+			draw.text((0, 48), "Skip this location!", font=font, fill=255)
 
 			disp.image(image)
 			disp.display()
@@ -71,4 +71,3 @@ while True:
 	else:
 		ellipsis = ".   "
 		phase = 0
-
